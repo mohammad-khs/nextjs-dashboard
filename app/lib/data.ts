@@ -182,6 +182,22 @@ export async function fetchCustomers() {
     throw new Error("Failed to fetch all customers.");
   }
 }
+export async function fetchCustomerById(id : string) {
+  try {
+    const data = await sql<CustomerField>`
+      SELECT
+        id,
+        name
+      FROM customers WHERE id = ${id}
+    `;
+
+    const customers = data.rows;
+    return customers;
+  } catch (err) {
+    console.error("Database Error:", err);
+    throw new Error("Failed to fetch all customers.");
+  }
+}
 
 export async function fetchFilteredCustomers(query: string) {
   try {
